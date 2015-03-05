@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>注意力训练</title>
+<script src="js/jquery.min.js"></script>
+<style>
+ul,li{list-style:none;float:left;}
+ul{padding:0px;}
+li{border:1px solid #ccc;font-size:50px;font-family:微软雅黑;font-weight:bold;width:100px;height:80px;margin:5px;text-align:center;padding-top:20px;}
+.error{background-color:#ee9833;}
+.right{background-color:#33ee33;}
+</style>
+<script>
+var time=0;
+var rdn=0;
+var list=new Array();
+function getRandNum(){
+	var i=-1;
+	while(i==-1||!conin(i)){
+		i= Math.round(Math.random()*25);
+		if(i==0)
+			i=-1
+	}
+	return i;
+}
+function conin(n){
+	for(var i=0;i<list.length;i++){
+		if(n==list[i]){
+			list[i]=0;
+			return true;
+		}
+	}
+	return false;
+}
+var timer;
+function start(){
+	rdn=1;
+	clearInterval(timer);
+	var $span=$("#itemspan");
+	for(var i=1;i<=25;i++){
+		list[i-1]=i;
+	}
+	var $ul=$("ul").empty();
+	for(var i=0;i<25;i++){
+		var rd=getRandNum();
+		$ul.append("<li onclick='ck(this,"+rd+")'>"+rd+"</li>");
+	}
+	$("li",$ul).each(function(i,li){
+		$(li).mousedown(function(){
+			$(li).addClass("right");
+		});
+		$(li).mouseup(function(){
+			$(li).removeClass("right");
+		});
+	});
+	time=0;
+	timer=setInterval(function(){
+		time+=10;
+		$span.html(time/100.0);
+	},100);
+}
+function stop(){
+	rdn=1;
+	clearInterval(timer);
+	if(confirm("你的成绩是:"+(time/100.0)+"秒"))
+	start();
+}
+function ck(li,rd){
+	$(".error").removeClass("error");
+	var $li=$(li);
+	if(rd==rdn)
+	{
+		rdn++;
+		$("#numspan").html(rdn);
+	}else{
+		$li.addClass("error");
+	}
+	if(rdn>25){
+		stop();
+	}
+}
+</script>
+</head>
+<body>
+<h2>舒尔特方格注意力训练</h2>
+<button onclick="start();">开始</button>
+<button onclick="stop();">停止</button>下一个数字为：<b><span id="numspan"></span></b>&nbsp;&nbsp;时间(秒):<span id="itemspan" style="width:30px;">&nbsp;</span>
+<div>
+<ul style="width:650px;"></ul>
+</div>
+</body>
+</html>
