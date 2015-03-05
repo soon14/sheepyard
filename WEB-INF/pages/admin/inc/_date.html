@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<style type="text/css">
+	body{margin:0;padding:0;}
+	</style>
+	<script src="${root!}/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="${root!}/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="${root!}/css/datepicker.css" />
+	<script src="${root!}/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript">
+	$(function(){
+	$("form_datetime").datepicker({
+		format:"yy/mm/dd",
+		language:"zh-CN",
+	})
+	</script>
+	</head>
+	
+	<body>
+	<div class="date form_datetime" id="date-box">
+    </div>
+	</body>
+	</html>

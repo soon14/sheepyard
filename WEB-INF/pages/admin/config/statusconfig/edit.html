@@ -1,0 +1,41 @@
+<div class="well">
+<form class="form-horizontal" id="dialogForm" action="${root!}/admin/config/statusconfig/save" onsubmit="ajaxSubmit(this); return false;">
+	<#macro genSelect id datas key text defaultValue> 
+        <select id=${id} name=${id}>
+        <#list datas as data>   
+          <#if key!="">
+            <#if defaultValue??>
+            <#if defaultValue==data[key]?int>  
+               <option value="${data[key]}" selected>${data[text]}</option>  
+            <#else>  
+               <option value="${data[key]}">${data[text]}</option>  
+            </#if>
+            <#else>
+            <option value="${data[key]}">${data[text]}</option>  
+            </#if>
+            
+          </#if>    
+        </#list>  
+        </select>
+    </#macro>
+	<input type="hidden" value="${po.id!}" name="id" id="poid_">
+	<div class="control-group">
+        <label class="control-label" for="name">前状态</label>
+        <div class="controls">
+        <@genSelect id="post_config_status" datas=status_list key="id" text="growth_status_name" defaultValue=po.pre_status_id/> 
+        </div>
+    </div>
+	<div class="control-group">
+        <label class="control-label" for="name">后状态</label>
+          <div class="controls">
+          <@genSelect id="pre_config_status" datas=status_list key="id" text="growth_status_name" defaultValue=po.post_status_id/> 
+	    </div>
+	</div>
+	<div class="control-group">
+	    <label class="control-label" for="config_time">转化时间</label>
+		<div class="controls">
+			<input type="text" name="config_time" id="config_time" value="${po.config_time!}" placeholder="转化时间" required/>
+		</div>
+    </div>
+</form>
+</div>

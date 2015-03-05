@@ -1,0 +1,22 @@
+<div class="well">
+<form class="form-horizontal" id="dialogForm" action="${root!}/admin/savePwd" onsubmit="ajaxSubmit(this); return false;">
+  <div class="control-group">
+    <label class="control-label" for="oldpwd">旧密码</label>
+    <div class="controls">
+      <input type="password" name="oldpwd" id="oldpwd" placeholder="旧密码"required>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="newpwd">新密码</label>
+    <div class="controls">
+      <input type="password" name="newpwd" id="newpwd" placeholder="新密码"required>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="reppwd">再输一次新密码</label>
+    <div class="controls">
+      <input type="password" name="reppwd" id="reppwd" placeholder="再输一次新密码"required>
+    </div>
+  </div>
+</form>
+</div>

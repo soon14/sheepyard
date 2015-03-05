@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>羊场后台管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="${root!}/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${root!}/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="${root!}/css/unicorn.login.css" />
+<script type="text/javascript">
+var root="${root!}";
+</script>
+</head>
+<body>
+		<div id="logo">
+            <img src="${root!}/img/logo.png" alt="" height="80px"/>
+        </div>
+        <div id="loginbox">            
+            <form id="loginform" class="form-horizontal" method="POST" action="login" onsubmit="return false;" novalidate="novalidate">
+				<p>&nbsp;</p>
+                <div class="control-group">
+                	<label class="control-label">用户名</label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-user"></i></span><input type="text" name="userno" value="" class="span2" placeholder="用户名"  id="userno"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+					<label class="control-label">密码</label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-lock"></i></span><input type="password" value="" name="password" class="span2" placeholder="密码"  id="password"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                	<label class="control-label">验证码</label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-check"></i></span>
+                            <input type="text" name="validCode" id="validCode" class="span1" maxlength="4" style="width:80px;" placeholder="验证码" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <img src="${root!}/ValidCode/jpg" id="codeimg"
+                             onclick="this.src='${root!}/ValidCode/jpg?id='+Math.random()*10"rel="tooltip" data-placement="right" data-original-title="点击更新验证码"  width="75" height="24" style="margin-:3px 0 0 -80px;cursor:pointer;z-index:10;position:relative;"/><a href="javascript:$('#codeimg').click();">看不清?</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                	<span class="pull-left"><br>CopyRight<sup>&copy;</sup>2015 &nbsp;struct &nbsp;</span>
+                    <span class="pull-right"><input type="submit" class="btn btn-inverse" value="登  录" /></span>
+                </div>
+            </form>
+        </div>
+        <div id="bottom">
+        <div></div>
+        <p></p>
+        </div>
+        <script src="${root!}/js/jquery.min.js"></script>
+        <script src="${root!}/js/bootstrap.min.js"></script>
+        <script src="${root!}/js/jquery.validate.js"></script>
+        <script src="${root!}/js/messages_zh.js"></script>
+        <script src="${root!}/lhgdialog/lhgdialog.min.js"></script>
+		<script src="${root!}/js/admin/login.js"></script> 
+</body>
+<style type="text/css">
+body{background:url("${root!}/img/furley_bg.png");}
+#codeimg{width:75;height:24px;}
+</style>
+</html>

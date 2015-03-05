@@ -1,0 +1,183 @@
+<#macro layout title="" keywords="" description="">
+<#compress><#--用来压缩空白空间和空白的行-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>${title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="${keywords}">
+<meta name="description" content="${description}">
+<meta name="author" content="keyword">
+<meta name="copyright" content="keyword@struct">
+<meta name="chinaz-site-verification" content="">
+<#--样式-->
+<link rel="stylesheet" href="${root!}/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${root!}/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="${root!}/css/fullcalendar.css" />	
+<link rel="stylesheet" href="${root!}/css/uniform.css" />
+<link rel="stylesheet" href="${root!}/css/select2.css" />
+<link rel="stylesheet" href="${root!}/css/unicorn.main.css" />
+<link rel="stylesheet" href="${root!}/css/unicorn.grey.css" class="skin-color" />
+<style>
+body{background-color: #444;}
+</style>
+<style type="text/css">
+.btn-toolbar{padding-left:10px;}
+</style>
+<#--javascript-->
+<script src="${root!}/js/jquery.min.js"></script>
+<script src="${root!}/js/excanvas.min.js"></script>
+<script src="${root!}/js/bootstrap.min.js"></script>
+<script src="${root!}/js/bootstrap-datepicker.js"></script>
+<script src="${root!}/js/select2.min.js"></script>
+<script src="${root!}/js/jquery.uniform.js"></script>
+<script src="${root!}/js/jquery.dataTables.min.js"></script>
+<script src="${root!}/js/fullcalendar.min.js"></script>
+<script src="${root!}/js/unicorn.js"></script>
+<script src="${root!}/kindeditor/kindeditor-min.js"></script>
+<script src="${root!}/kindeditor/lang/zh_CN.js"></script>
+<script src="${root!}/lhgdialog/lhgdialog.min.js"></script>
+<script type="text/javascript">
+var root='${root!}';
+</script>
+<script>
+function jsonEval(data){
+	try{
+	if($.type(data)=='string')
+	return eval('('+data+')');
+	else return data;}catch(e){
+	return{};}
+}
+function showMiniDialog(data){
+	$.dialog({content:"<h4>"+data.message+"</h4>",title:false,time:1,icon:data.statusCode+'.gif',close:function(){
+	    var duration = 400, /*动画时长*/
+        api = this,
+        opt = api.config,
+        wrap = api.DOM.wrap,
+        top = $(window).scrollTop() - wrap[0].offsetHeight;
+    	wrap.animate({top:top + 'px', opacity:0}, duration, function(){
+        opt.close = function(){};
+        api.close();
+	    });
+	    return false;
+	} });
+}
+function openlhDialog(url_,title,ok_){//,width,height
+	$.ajax({url:url_,type:'POST',dataType:'html',success:function(data){
+		var json=jsonEval(data);
+		if(json.statusCode!=undefined&&json.statusCode!=''){
+			showMiniDialog(json);
+		}else{
+			if(ok_!=false){
+						var api = $.dialog({id:'formDialog',resize:false,title:title,
+						ok: function(){
+							$("#dialogForm").submit();
+					        return false;
+					    },okVal:'保存',cancel:true,
+					    cancelVal:'关闭',max:false,min:false,
+					    lock:true});
+						api.content(data);
+			}else{
+				var api = $.dialog({id:'formDialog_view',resize:false,title:title,
+					ok:false,cancel:true,
+				cancelVal:'关闭',max:false,min:false});
+				api.content(data);
+			}
+		}
+	},cache:false});
+}
+function confirm(url_,content){
+	$.dialog.confirm(content, function(){
+	    $.ajax({url:url_,success:function(data){
+			/*if("success"==data.statusCode){
+				$("#content").find("#seachbtn").click();
+			}*/
+			showMiniDialog(data);
+	    }});
+	}, function(){});
+}
+var ajaxDialog;
+function showlockdialog(){
+	ajaxDialog=$.dialog({id:'ajaxDialog',
+		title:false,
+	    fixed: true,
+	    lock:true,
+	    content:'数据加载中...',
+	    icon:'loading.gif'
+	    ,time:3
+	});
+}
+$(document).ajaxStart(showlockdialog);
+$(document).ajaxComplete(function(event,request, settings){
+	//$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+	$('select').select2();
+	$("span.icon input:checkbox, th input:checkbox").click(function() {
+	var checkedStatus = this.checked;
+	var checkbox = $(this).parents('.widget-box').find('tr td:first-child input:checkbox');		
+	checkbox.each(function() {
+		this.checked = checkedStatus;
+		if (checkedStatus == this.checked) {
+			$(this).closest('.checker > span').removeClass('checked');
+		}
+		if (this.checked) {
+			$(this).closest('.checker > span').addClass('checked');
+		}
+	});
+});
+	ajaxDialog.get('ajaxDialog',1).close();
+});
+function logout(){
+	var url=root+'/admin/logout';
+	$.dialog.confirm('你确定要退出系统吗？<br>未保存的信息将会丢失，请退出前保存数据！', function(){
+	    window.location=url;
+	}, function(){});
+}
+function ajaxSubmit(form_){
+	var $form=$(form_);
+	$.ajax({url:form_.action,data:$form.serialize(),cache:false,dataType:'json',type:'POST',success:function(data){
+		if("success"==data.statusCode){
+			$("#poid",$form).val(data.idVal);
+		}
+		showMiniDialog(data);
+	}});
+}
+function ajaxSeachForm(form_){
+	var $form=$(form_);
+	$.ajax({url:$form.attr("action"),data:$form.serialize(),type:'POST',dataType:'html',success:function(html){
+		$("#content").html(html);
+		$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+	}});
+	return false;
+}
+$.ajaxSetup({
+ type: "POST",
+ cache:false
+});
+function setPwd(){
+	openlhDialog(root+"/admin/setPwd","修改密码");
+}
+</script>
+</head>
+<body>
+<div id="header">
+<h1><a href="dashboard"></a></h1>		
+</div>
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav btn-group">
+    <li class="btn btn-inverse" ><a href="#"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
+    <li class="btn btn-inverse dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-cog"></i> <span class="text">设置</span> <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+         <li><a class="sAdd" onclick="setPwd();return false;" href="#">修改密码</a></li>
+      </ul>
+    </li>
+    <li class="btn btn-inverse"><a href="#" onclick="logout();"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+  </ul>
+</div>
+<#include "_menu.html"/>
+<div id="content">
+<#nested>
+</div>
+</body>
+</html>
+</#compress>
+</#macro>

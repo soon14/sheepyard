@@ -1,0 +1,153 @@
+<#macro tableBtn idVal=0>
+<#--追加其他按钮-->
+</#macro>
+<#compress><#--用来压缩空白空间和空白的行-->
+<script src="${root!}/js/familytree/raphael-min.js"></script>
+<script src="${root!}/js/familytree/ftree.js"></script>
+<script type="text/javascript">
+  function show() {
+        var john = {
+            'first_name': 'John', 
+            'last_name': 'Gordon', 
+            'gender': 'male',
+        };
+        
+        var fred = {
+            'first_name': 'Fred', 
+            'last_name': 'Nightingale',
+            'gender': 'male'
+        };
+        
+        var mary = {
+            'first_name': 'Mary', 
+            'last_name': 'Cromwell', 
+            'gender': 'female',
+            'partners': [{'person': john}, {'person': fred}]
+        };
+        
+        
+        var alice = {
+            'first_name': 'Alice', 
+            'last_name': 'Horan',
+            'gender': 'female',
+            'partners': [{'person': john}]
+        };
+        
+        
+        var bill = {
+            'first_name': 'Bill', 
+            'last_name': 'Gordon', 
+            'gender': 'male',
+            'father': john,
+            'mother': mary
+        };        
+        
+        var ann = {
+            'first_name': 'Ann', 
+            'last_name': 'Gordon', 
+            'gender': 'female',
+            'father': john,
+            'mother': mary
+        };
+        
+        
+        var susan = {
+            'first_name': 'Susan', 
+            'last_name': 'Aprile', 
+            'gender': 'female',
+            'partners': [{'person': bill}]
+        };
+        
+        var laura = {
+            'first_name': 'Laura', 
+            'last_name': 'Gordon', 
+            'gender': 'female',
+            'deceased': 'N',
+            'father': john,
+            'mother': alice
+        };
+        
+       
+        var carl = {
+            'first_name': 'Carl', 
+            'last_name': 'Nightingale',
+            'gender': 'male'
+        };
+        
+        var kate = {
+            'first_name': 'Kate', 
+            'last_name': 'Gordon', 
+            'gender': 'female',
+            'father': bill,
+            'mother': susan
+        };
+        
+        var steve = {
+            'first_name': 'Steve', 
+            'last_name': 'Gordon', 
+            'gender': 'male',
+            'father': bill,
+            'mother': susan
+        };            
+  
+        // prepare settings for the second tree
+        var settings = {
+            color: '#009',
+            fillColor: '#0d0',
+            maleFillColor: '#55e',
+            femaleFillColor: '#ee5',
+            strokeColor: '#0f0',
+            mouseoverColor: '#DDD',
+            startX: 300,
+            startY: 150,
+            width: 50,
+            height: 50,
+            vDistance: 70,
+            hDistance: 70,
+            fontSize: '12',
+            active_person: john,
+            active_partner: mary,
+            onClick: function (person) { alert(person.first_name + ' ' + person.last_name); },
+            getText: function (person) {  return getFullName(person) } 
+        };        
+        
+        // create the tree
+        var ft = new familyTree([john, kate, mary, bill, susan, alice, steve, ann, carl, fred, laura], settings); 
+        ft.show(); 
+}
+
+    // get full name (first name + middle name + last name) for a person
+    function getFullName(person) {
+
+        var fullName = '';
+
+        if (person.first_name) {
+            fullName = fullName + person.first_name + '\n';
+        }
+        else {
+            fullName = fullName + 'Unknown\n';
+        }
+
+        if (person.middle_name) {
+            fullName = fullName + person.middle_name + '\n';
+        }
+
+        if (person.last_name) {
+            fullName = fullName + person.last_name;
+        }
+
+        return fullName;
+    }
+</script>
+<div id="breadcrumb">
+	<a href="${root!}/" target="_bank" title="网站首页" class="tip-bottom"><i class="icon-home"></i> 首页</a><a>羊只管理</a><a href="#" class="current">系谱图</a>
+</div>
+<div class="row-fluid">
+	<form action="${root!}/admin/sheep/pedigreeinfo" class="seachForm" onsubmit="ajaxSeachForm(this);return false;"><#-- class="form-search"-->
+	<div class="btn-toolbar">
+	  	<input type="text" name="kwd" value="${kwd!}" rel=tooltip class="input-medium search-query tip-bottom" title="输入需要搜索的条件..." placeholder="输入需要搜索的条件...">
+	  	<button type="submit" class="btn btn-small" id="seachbtn" onclick="show()"><i class="icon-search"></i>搜索</button>
+  	</div>
+	</form>
+</div>
+</#compress>

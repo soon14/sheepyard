@@ -1,0 +1,23 @@
+<div class="well">
+<form class="form-horizontal" id="dialogForm" action="${root!}/admin/config/statusconfig/save" onsubmit="ajaxSubmit(this); return false;">
+	<input type="hidden" value="${po.id!}" name="id" id="poid_">
+	<div class="control-group">
+        <label class="control-label" for="name">前状态</label>
+        <div class="controls">
+            <select id="pre_config_status" name="pre_config_status" val="${po.id!}"><@growstatusSelect/></select>
+        </div>
+    </div>
+	<div class="control-group">
+        <label class="control-label" for="name">后状态</label>
+        <div class="controls">
+            <select id="post_config_status" name="post_config_status" val="${po.id!}"><@growstatusSelect/></select>
+	    </div>
+	</div>
+	<div class="control-group">
+	    <label class="control-label" for="config_time">转化时间</label>
+		<div class="controls">
+			<input type="text" name="config_time" id="config_time" value="${po.config_time!}" placeholder="转化时间" required/>
+		</div>
+    </div>
+</form>
+</div>

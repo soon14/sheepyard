@@ -1,0 +1,32 @@
+<script>
+KindEditor.ready(function(K) {
+var editor=K.create('#content1', {
+	themeType : 'default',
+	uploadJson : '${root!}/file/up',
+	fileManagerJson : '${root!}/file_manager_json.jsp',
+	allowFileManager : true
+});
+	K('#filemanager').click(function() {
+		editor.loadPlugin('filemanager', function() {
+		editor.plugin.filemanagerDialog({
+		viewType : 'VIEW',
+		dirName : 'image',
+		clickFn : function(url, title) {
+		K('#url').val(url);
+		editor.hideDialog();
+	}
+});
+});
+});
+});
+</script>
+<div class="progress progress-striped active">
+  <div class="bar" style="width:40%;"></div>
+</div>
+<input type="text" id="url" value="" /> <input type="button" id="filemanager" value="浏览服务器" />
+<button onclick="showlockdialog()">显示窗口</button>
+<h3>默认风格</h3>
+<form method="post">
+		<textarea id="content1" name="content" style="width:700px;height:200px;visibility:hidden;">${content!}</textarea>
+		<button type="submit">提交</button>
+</form>

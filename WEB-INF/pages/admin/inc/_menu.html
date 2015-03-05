@@ -1,0 +1,65 @@
+<div id="sidebar">
+	<a href="#" url="#" class="visible-phone"><i class="icon icon-th-list"></i>Wizard</a>
+	<ul>
+		<li><a href="#" url="${root!}/admin/desktop" id='desktop'><i class="icon icon-home"></i> <span>桌面</span></a></li>
+		<li class="submenu"><a><i class="icon icon-th-list"></i><span>羊只管理</span></a>
+			<ul>
+				<li><a href="#" url="${root!}/admin/sheep/baseinfo">羊只基本信息管理</a></li>
+				<li><a href="#" url="${root!}/admin/sheep/pedigreeinfo">羊只系谱信息管理</a></li>
+				<li><a href="#" url="${root!}/admin/sheep/growthinfo">羊只发育信息管理</a></li>
+				<li><a href="#" url="${root!}/admin/sheep/quarantineinfo">羊只检疫信息管理</a></li>
+				<li><a href="#" url="${root!}/admin/sheep/immunity">羊只免疫信息管理</a></li>
+				<li><a href="#" url="${root!}/admin/sheep/treatment">羊只诊疗信息管理</a></li>
+			</ul></li>
+		<li class="submenu"><a><i class="icon icon-th-list"></i><span>通知管理</span></a>
+			<ul>
+				<li><a href="#" url="${root!}/admin/manag">查看通知</a></li>
+				<li><a href="#" url="${root!}/admin/manager/edit">查询通知</a></li>
+				<li><a href="#" url="${root!}/admin/"></a></li>
+			</ul></li>
+		<li class="submenu"><a><i class="icon icon-th-list"></i><span>羊舍管理</span></a>
+			<ul>
+				<li><a href="#" url="${root!}/admin/manager">系统用户</a></li>
+				<li><a href="#" url="${root!}/admin/manager/edit">网站信息设置</a></li>
+				<li><a href="#" url="${root!}/admin/"></a></li>
+			</ul></li>
+		<li class="submenu"><a><i class="icon icon-th-list"></i><span>配置管理</span></a>
+			<ul>
+				<li><a href="#" url="${root!}/admin/config/gene">基因型配置</a></li>
+				<li><a href="#" url="${root!}/admin/config/type">类型设置</a></li>
+				<li><a href="#" url="${root!}/admin/config/variety">品种配置</a></li>
+				<li><a href="#" url="${root!}/admin/config/growthstatus">生长状态配置</a></li>
+				<li><a href="#" url="${root!}/admin/config/statusconfig">状态转化配置</a></li>
+			</ul></li>
+		<li class="submenu"><a><i class="icon icon-th-list"></i><span>系统管理</span></a>
+			<ul>
+			    <li class="active"><a href="#" url="${root!}/admin/manager"><i class="icon icon-user"></i>系统用户</a></li>
+			</ul>
+		</li>
+		<li><a href="#" url="${root!}/admin/manager"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
+	</ul>
+</div>
+<script>
+function loadMenu(tha){
+var $tha=$(tha);
+$.ajax({url:$tha.attr("url"),dataType:'html',cache:false,success:function(html){
+	var json=jsonEval(html);
+	if(json.statusCode!=undefined&&json.statusCode!=''){
+		showMiniDialog(json);
+	}else{
+		$(".active").removeClass("active");
+		$tha.addClass("active");
+		$("#content").empty().html(html);
+		$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+	}
+},error:function(e){alert(e);},complete:function(){
+}});
+return false;
+}
+$(function (){
+	$("#sidebar").find("a[url]").each(function(i,a){
+		$(a).click(function (){loadMenu(this);return false;});
+	});
+	$("#desktop").click();
+});
+</script>

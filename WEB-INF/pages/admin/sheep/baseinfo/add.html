@@ -1,0 +1,85 @@
+<script type="text/javascript">
+var api=lhgdialog.focus;
+
+//var api=frameElement.api,
+var w=api.opener
+
+function ontest(){
+	w.$.dialog({id:'CLHG1976D', content:'',lock:true,parent:api});
+}
+</script>
+<div class="well">
+<form class="form-horizontal" id="dialogForm" action="${root!}/admin/sheep/baseinfo/save" onsubmit="ajaxSubmit(this); return false;">
+	<div class="control-group">
+	    <label class="control-label" for="mark_num">耳标号</label>
+		<div class="controls">
+			<input type="text" name="mark_num" id="mark_num" value="" placeholder="耳标号" required/>
+		</div>
+    </div>
+    <div class="control-group">
+	    <label class="control-label" for="father_sheep_id">父羊</label>
+		<div class="controls">
+			<input type="text" name="father_sheep_id" id="father_sheep_id" value="" placeholder="父羊" required/>
+		</div>
+    </div>
+    <div class="control-group">
+	    <label class="control-label" for="mother_sheep_id">母羊</label>
+		<div class="controls">
+			<input type="text" name="mother_sheep_id" id="mother_sheep_id" value="" placeholder="母羊" required/>
+		</div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="gene_type">基因型</label>
+        <div class="controls">
+            <select id="gene_type" name="gene_type" val=""><@geneInfoSelect/></select>
+	    </div>
+	</div>
+	<div class="control-group">
+        <label class="control-label" for="sex_genda">性别</label>
+        <div class="controls">
+            <select id="sex_genda" name="sex_genda" val="公">
+                <option value="1">公</option>
+                <option value="2">母</option> 
+            </select>
+	    </div>
+	</div>
+	<div class="control-group">
+        <label class="control-label" for="type_info">类型</label>
+        <div class="controls">
+            <select id="type_name" name="type_name" val=""><@typeInfoSelect/></select>
+	    </div>
+	</div>
+	
+	<div class="control-group">
+        <label class="control-label" for="type_info">品种</label>
+        <div class="controls">
+            <select id="variety_name" name="variety_name" val=""><@varietyInfoSelect/></select>
+	    </div>
+	</div>	
+	<div class="control-group">
+        <label class="control-label" for="name">状态</label>
+        <div class="controls">
+            <select id="growth_status" name="growth_status" val=""><@growstatusSelect/></select>
+	    </div>
+	</div>	
+	<div class="control-group input-append" id="date-box">
+	    <label class="control-label" for="birth_day">出生日期</label>
+		<div class="controls">
+			<input type="text" name="birth_day" id="birth_day" value="" placeholder="出生日期" required readonly/>
+		    <apan class="add-on"><i class="icon-th" onclick="ontest()"></i></apan>
+		</div>
+    </div>	
+	<div class="control-group" id="date-box">
+	    <label class="control-label" for="enter_day">入场日期</label>
+		<div class="controls">
+			<input type="text" name="enter_day" id="enter_day" value="" placeholder="入场日期" required/>
+		</div>
+    </div>
+    <div class="control-group">
+	    <label class="control-label" for="pen_name">羊舍名字</label>
+		<div class="controls">
+			<input type="text" name="yard_name" id="pen_name" value="" placeholder="羊舍名字" required/>
+		</div>
+    </div>
+</form>
+</div>

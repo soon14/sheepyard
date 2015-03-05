@@ -1,0 +1,40 @@
+<div class="well">
+<form class="form-horizontal" id="dialogForm" action="${root!}/admin/manager/save" onsubmit="ajaxSubmit(this); return false;">
+	<input type="hidden" value="${po.id!}" name="manager.id" id="poid">
+	<div class="control-group">
+		<label class="control-label" for="userno">用户名</label>
+		<div class="controls">
+			<input type="text" name="manager.userno" id="userno" <#if po.id??> disabled="disabled"</#if> value="${po.userno!}" placeholder="用户名" required/>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="username">姓名</label>
+		<div class="controls">
+			<input type="text" name="manager.username" id="username" value="${po.username!}" placeholder="姓名" required/>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="sex">性别</label>
+		<div class="controls">
+			<select name="manager.sex" id="sex" value="${po.sex!}">
+			<option value="男">男</option>
+			<option value="女">女</option>
+			</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="phone">手机</label>
+		<div class="controls">
+			<input type="text" name="manager.phone" id="phone" value="${po.phone!}" placeholder="手机"/>
+		</div>
+	</div>
+	<#if po.id??>
+	<div class="control-group">
+		<label class="control-label">注册日期</label>
+		<div class="controls">
+			<input type="text" value="${po.regdate!}" placeholder="注册日期" disabled="disabled"/>
+		</div>
+	</div>
+	</#if>
+</form>
+</div>

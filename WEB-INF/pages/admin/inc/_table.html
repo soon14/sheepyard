@@ -1,0 +1,61 @@
+<#macro table btn=true checkbox=false radiobox=false edit=true del=true>
+<table class="table table-bordered<#if checkbox || radiobox> with-check</#if> table-hover table-condensed">
+<thead><tr>
+<#if checkbox || radiobox>
+<th>
+<#if checkbox>
+<span class="icon">
+<input type="checkbox" id="title-checkbox" name="title-checkbox" />
+</span>
+</#if>
+</th>
+</#if>
+<th>行号</th>
+<#list collist! as t>
+<th>${t!}</th>
+</#list>
+<#if btn>
+<th></th>
+</#if>
+</tr></thead>
+<#if page??&&page.list??>
+<tbody>
+<#list page.list as d>
+<tr>
+<#if checkbox || radiobox>
+<td><input type="<#if checkbox>checkbox<#else>radio</#if>" name="ids" value="${d.id!}"></td>
+</#if>
+<td>${d_index+1+((page.pageNumber-1)*page.pageSize)}</td>
+<#list collist as t>
+<td>${d.get(t)!}</td>
+</#list>
+<#if btn>
+<td>
+<div class="btn-group">
+  <a class="btn btn-small" href="#" onclick="view(${d.id!});"><i class="icon-eye-open"></i>查看</a>
+  <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret">&nbsp;</span></a>
+  <ul class="dropdown-menu">
+  	<#if edit>
+    <li><a href="#" onclick="edit(${d.id!});"><i class="icon-pencil"></i>编辑</a></li>
+	</#if>
+	<#if del>
+    <li><a href="#" onclick="del(${d.id!});"><i class="icon-trash"></i>删除</a></li>
+    </#if>
+    <@tableBtn idVal=d.id/>
+  </ul>
+</div>
+</td>
+</#if>
+</tr>
+</#list>
+</tbody>
+</#if>
+<tfoot>
+<tr>
+<td colspan="100%">
+<#include "_pagination.html"/><@paginate currentPage=page.pageNumber totalPage=page.totalPage/>
+</td>
+</tr>
+</tfoot>
+</table>
+</#macro>

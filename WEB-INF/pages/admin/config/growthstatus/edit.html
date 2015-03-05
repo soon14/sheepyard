@@ -1,0 +1,11 @@
+<div class="well">
+<form class="form-horizontal" id="dialogForm" action="${root!}/admin/config/growthstatus/save" onsubmit="ajaxSubmit(this); return false;">
+	<input type="hidden" value="${po.id!}" name="id" id="poid_">
+	<div class="control-group">
+		<label class="control-label" for="name">名称</label>
+		<div class="controls">
+			<input type="text" name="growth_status_name" id="growth_status_name" value="${po.growth_status_name!}" placeholder="名称" required/>
+		</div>
+	</div>
+</form>
+</div>

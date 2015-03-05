@@ -1,0 +1,61 @@
+<#macro paginate currentPage=0 totalPage=0 totalCount=0 pageSize=10>
+	<#if (totalPage <= 0) || (currentPage > totalPage)><#return></#if>
+	<#local startPage = currentPage - 4>
+	<#if (startPage < 1)><#local startPage = 1></#if>
+	
+	<#local endPage = currentPage + 4>
+	<#if (endPage > totalPage)><#local endPage = totalPage></#if>
+	<div class="pagination">
+	<ul>
+			<#if (currentPage <= 8)>
+				<#local startPage = 1>
+			</#if>
+			<#if ((totalPage - currentPage) < 8)>
+				<#local endPage = totalPage>
+			</#if>
+			
+			<#if (currentPage == 1)>
+				<li class="disabled"><a href="#" url="#">上页</a></li>
+			<#else>
+				<li><a href="#" url="#{currentPage - 1}" class="prev_page">上页</a></li>
+			</#if>
+			
+			<#if (currentPage > 8)>
+				<li><a href="#" url="#{1}">#{1}</a></li>
+				<li><a href="#" url="#{2}">#{2}</a></li>
+				<li><a class="gap">…</a></li>
+			</#if>
+			
+			<#list startPage..endPage as i>
+				<#if currentPage == i>
+					<li class="active"><a href="#" url="#">#{i}</a></li>
+				<#else>
+					<li><a href="#" url="#{i}">#{i}</a></li>
+				</#if>
+			</#list>
+			
+			<#if ((totalPage - currentPage) >= 8)>
+				<li><a class="gap">…</a></li>
+				<li><a href="#" url="#{totalPage - 1}">#{totalPage - 1}</a></li>
+				<li><a href="#" url="#{totalPage}">#{totalPage}</a></li>
+			</#if>
+			
+			<#if (currentPage == totalPage)>
+				<li class="disabled"><a>下页</a></li>
+			<#else>
+				<li><a href="#" url="#{currentPage + 1}">下页</a></li>
+			</#if>
+		</ul>
+	</div>
+	<script>
+$(".pagination").find("a").each(function(i,it){
+	var $a=$(it);
+	$a.click(function(){
+		 var $form=$(this).parents("form");
+		$("#currentPage",$form).val($a.attr("url"));
+		ajaxSeachForm($form);
+	return false;
+	});
+});
+</script>
+</#macro>
